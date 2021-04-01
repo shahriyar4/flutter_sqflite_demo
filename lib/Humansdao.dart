@@ -44,13 +44,47 @@ class Humansdao {
     await db.update("Humans", information,
         where: "humans_id=?", whereArgs: [humans_id]);
   }
-
+// This is to control Humans
   Future<int> contreoller(String humans_name) async {
     var db = await DataBaseHelper.databaseAcces();
 
     List<Map<String, dynamic>> maps = await db.rawQuery(
         "SELECT count (*) AS result  FROM Humans WHERE humans_name='$humans_name'");
 
-        return maps[0]["result"];
+    return maps[0]["result"];
+  }
+// This is to get Humans
+  Future<Humans> getHumans(int humans_id) async {
+    var db = await DataBaseHelper.databaseAcces();
+
+    List<Map<String, dynamic>> maps =
+        await db.rawQuery("SELECT * FROM Humans  WHERE humans_id=$humans_id");
+
+    var line = maps[0];
+    return Humans(line["humans_id"], line["humans_name"], line["humans_age"]);
+  }
+// This is to search Humans name
+  Future<List<Humans>> searchHumans(String searchWords) async {
+    var db = await DataBaseHelper.databaseAcces();
+
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Humans WHERE humans_name like '%$searchWords%' ");
+
+    return List.generate(maps.length, (i) {
+      var line = maps[i];
+
+      return Humans(line["humans_id"], line["humans_name"], line["humans_age"]);
+    });
+  }
+// This is to get  random Humans
+  Future<List<Humans>> randomGetHumans() async {
+    var db = await DataBaseHelper.databaseAcces();
+
+    List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Humans  ORDER BY RANDOM() LIMIT 2");
+
+    return List.generate(maps.length, (i) {
+      var line = maps[i];
+
+      return Humans(line["humans_id"], line["humans_name"], line["humans_age"]);
+    });
   }
 }

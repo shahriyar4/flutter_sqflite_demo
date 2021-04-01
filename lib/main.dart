@@ -38,41 +38,67 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-   Future<void> add() async {
-
-     await Humansdao().addHumans("Ali", 37);
-    
+  Future<void> add() async {
+    await Humansdao().addHumans("Ali", 37);
   }
 
   Future<void> delete() async {
-
-     await Humansdao().deleteHumans(4);
-    
+    await Humansdao().deleteHumans(4);
   }
 
   Future<void> update() async {
-
     await Humansdao().updateHumans(5, "New name", 19);
-
   }
 
-Future<void> dataController( String key) async {
+  Future<void> dataController(String key) async {
+    int result = await Humansdao().contreoller(key);
 
-     int result = await Humansdao().contreoller(key);
-
-     print(" There are $result $key in the data ");
-    
+    print(" There are $result $key in the data ");
   }
 
-@override
-void initState() { 
-  super.initState();
-  //add();
-  //update();
-  //delete();
-  //viewHumans();
-  dataController("Ali");
-}
+  Future<void> get() async {
+    var human = await Humansdao().getHumans(1);
+
+    print("*************");
+    print("Humans id : ${human.humans_id}");
+    print("Humans Name : ${human.humans_name}");
+    print("Humans Age : ${human.humans_age}");
+  }
+  Future<void> search() async {
+    var list = await Humansdao().searchHumans("i");
+
+    for (Humans k in list) {
+      print("*************");
+      print("Humans id : ${k.humans_id}");
+      print("Humans Name : ${k.humans_name}");
+      print("Humans Age : ${k.humans_age}");
+    }
+  }
+
+
+  Future<void> randomget() async {
+    var list = await Humansdao().randomGetHumans();
+
+    for (Humans k in list) {
+      print("*************");
+      print("Humans id : ${k.humans_id}");
+      print("Humans Name : ${k.humans_name}");
+      print("Humans Age : ${k.humans_age}");
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    //add();
+    //update();
+    //delete();
+    // viewHumans();
+    //dataController("Ali");
+    //get();
+    //search();
+    randomget();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,11 +107,7 @@ void initState() {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-          ]
-        ),
+            mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[]),
       ),
     );
   }
