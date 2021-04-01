@@ -37,9 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
       print("Humans Age : ${k.humans_age}");
     }
   }
+
+   Future<void> add() async {
+
+     await Humansdao().addHumans("Ali", 37);
+    
+  }
 @override
 void initState() { 
   super.initState();
+  add();
   viewHumans();
 }
   @override

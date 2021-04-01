@@ -16,4 +16,18 @@ return List.generate(maps.length, (i){
 
 
   }
+
+  Future<void> addHumans(String humans_name, int humans_age) async {
+var db = await DataBaseHelper.databaseAcces();
+var information = Map<String,dynamic>();
+
+information["humans_name"]= humans_name;
+information["humans_age"]= humans_age;
+
+await   db.insert("Humans", information);
+
+
+
+
+  }
 }
