@@ -43,11 +43,35 @@ class _MyHomePageState extends State<MyHomePage> {
      await Humansdao().addHumans("Ali", 37);
     
   }
+
+  Future<void> delete() async {
+
+     await Humansdao().deleteHumans(4);
+    
+  }
+
+  Future<void> update() async {
+
+    await Humansdao().updateHumans(5, "New name", 19);
+
+  }
+
+Future<void> dataController( String key) async {
+
+     int result = await Humansdao().contreoller(key);
+
+     print(" There are $result $key in the data ");
+    
+  }
+
 @override
 void initState() { 
   super.initState();
-  add();
-  viewHumans();
+  //add();
+  //update();
+  //delete();
+  //viewHumans();
+  dataController("Ali");
 }
   @override
   Widget build(BuildContext context) {
@@ -60,7 +84,7 @@ void initState() {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-          Text('${Humansdao()}')]
+          ]
         ),
       ),
     );
